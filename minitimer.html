@@ -1,0 +1,72 @@
+<html>
+<head>
+<style>
+</style>
+<script>
+var para1;
+var para2;
+var update;
+var loop;
+var date;
+var hour;
+var minute;
+var second;
+var msecond;
+var time;
+
+function load () {
+	para1 = document.getElementById("para1");
+	para2 = document.getElementById("para2");
+	
+	update = function () {
+		date = new Date();
+		hour = date.getHours();
+		minute = date.getMinutes();
+		second = date.getSeconds();
+		msecond = date.getMilliseconds();
+		hour = String(hour);
+		minute = String(minute);
+		second = String(second);
+		msecond = String(msecond);
+		while (hour.length < 2) {
+			hour = "0" + hour;
+		}
+		while (minute.length < 2) {
+			minute = "0" + minute;
+		}
+		while (second.length < 2) {
+			second = "0" + second;
+		}
+		while (msecond.length < 3) {
+			msecond = msecond + "0";
+		}
+		para1.innerHTML = hour + ":" + minute + ":" + second + "." + msecond; // date.toString();
+		hour = parseInt(hour);
+		minute = parseInt(minute);
+		second = parseFloat(second + "." + msecond);
+		time = (hour * 60 * 60) + (minute * 60) + second;
+		time /= (24 * 60 * 60);
+		time *= 100;
+		time = Math.round(time * 100) / 100;
+		time = String(time);
+		while (time.length < 4) {
+			time = "0" + time;
+		}
+		para2.innerHTML = time + "%";
+		
+		document.requestAnimationFrame(update);
+	};
+	
+	loop = setInterval(function() {
+		update();
+	}, 1000);
+}
+</script>
+</head>
+<body onload="load();">
+<p id="para1">
+</p>
+<p id="para2">
+</p>
+</body>
+</html>
